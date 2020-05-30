@@ -1,1 +1,1 @@
-LOAD DATA INFILE '/store_files_mysql/clean_store_transactions.csv' INTO TABLE clean_store_transactions FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE '/store_files_mysql/clean_store_transactions.csv' INTO TABLE clean_store_transactions FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS ( STORE_ID, STORE_COUNTRY, STORE_LOCATION, PRODUCT_CATEGORY, PRODUCT_ID, MRP, CP, DISCOUNT, SP, @date)SET TRANSACTION_DATE = STR_TO_DATE(@date,'%m-%d-%Y');
