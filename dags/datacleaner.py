@@ -2,9 +2,23 @@ def data_cleaner():
 
     from datetime import datetime, timedelta
     import pandas as pd
+    import os
     import re
 
     df = pd.read_csv("~/store_files_airflow/stores_transactions.csv")
+
+    filePath = '/usr/local/airflow/store_files_airflow/clean_store_transactions.csv';
+     # check clean_store_transactions exists then deleting them
+    if os.path.exists(filePath):
+        os.remove(filePath)
+    filePath = '/usr/local/airflow/store_files_airflow/location_wise_profit.csv';
+    # check clean_store_transactions exists then deleting them
+    if os.path.exists(filePath):
+        os.remove(filePath)
+    filePath = '/usr/local/airflow/store_files_airflow/store_wise_profit.csv';
+    # check clean_store_transactions exists then deleting them
+    if os.path.exists(filePath):
+        os.remove(filePath)
 
     yesterday_date = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')
 
