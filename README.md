@@ -171,3 +171,6 @@ You can also use those variables to adapt your compose file to match an existing
 # Wanna help?
 
 Fork, improve and PR.
+
+#Configure File Sensor connection
+Admin > Connections > Create : 1.Conn Id : fs_check_file_exists 2.Conn Type : File(Path) 3.Extra : {"path": "/usr/local/airflow/store_files_airflow/"}
