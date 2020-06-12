@@ -49,8 +49,7 @@ def create_subdag_operator(dag):
                             task_id = subdag_name
                             )
             sub_dag_ops.append(sub_dag_op)
-
-    sense_files_task >> branch_task >> sub_dag_ops
+   
     return sub_dag_ops
 
 
@@ -64,14 +63,15 @@ with DAG(dag_id=PARENT_DAG_NAME,
 
                 sense_files_task = CustomFileSensor(task_id='sense_incoming_files',filepath=filepath,filepattern=filepattern,poke_interval=5,dag=dag)
 
-                branch_task = PythonOperator(
-                        task_id='process_file', 
+                process_file_task = PythonOperator(task_id='process_file', 
                         provide_context=True,
                         python_callable=process_file, 
                         dag=dag
                         )
                 
-                sub_dag_task = create_subdag_operator(dag)
+                sub_dag_ops = create_subdag_operator(dag)
+        
+                sense_files_task >> process_file_task >> sub_dag_ops
                              
                 
                 

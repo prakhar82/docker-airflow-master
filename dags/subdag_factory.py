@@ -2,7 +2,7 @@ import requests,csv,json
 import pandas as pd
 from itertools import groupby 
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime,date
 
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator,BranchPythonOperator
@@ -43,16 +43,17 @@ def parse_csv_to_json_save(**kwargs):
  
 def branch_func(**kwargs):
     timestamp = kwargs['child_dag_name']
-    print("timestamp", timestamp)
+    #print("timestamp", timestamp)
     file_timestamp = timestamp[-8:]
     print("file_timestamp", file_timestamp)
-    todaysDate = datetime.now()
-    print("Today's date:", todaysDate)
+    #todaysDate = datetime.now()
+    todaysDate = date.today()
+    #print("Today's date:", todaysDate)
     
-    file_date = datetime.strptime(file_timestamp, '%d%m%Y')
-    print("file_date",file_date)
-    if file_date > todaysDate:
-        return 'parse_csv_to_json_save'
+    file_date = datetime.strptime(file_timestamp, '%d%m%Y').date()
+    #print("file_date",file_date)
+    if file_date >= todaysDate:
+        return 'parse_csv_save_data'
     else:
         return 'stop_task'
 
